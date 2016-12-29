@@ -48,9 +48,20 @@ import sbtdatabricks.util.requests._
 
 /** Collection of REST calls to Databricks Cloud and related helper functions. Exposed for tests */
 class DatabricksHttp(
-    endpoint: String,
+    _endpoint: String,
     val client: HttpClient,
     outputStream: PrintStream = System.out) {
+
+  private val endpoint: String = {
+    if (_endpoint.endsWith("2.0")) {
+      outputStream.println(
+        "Warning: this plugin doesn't support the /api/2.0 endpoint; automatically rewriting" +
+          " dbcApiUrl to use the /api/1.2 endpoint")
+      endpoint.dropRight(3) + "1.2"
+    } else {
+      endpoint
+    }
+  }
 
   import DBApiEndpoints._
 
