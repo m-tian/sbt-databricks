@@ -57,9 +57,9 @@ class DatabricksHttp(
       outputStream.println(
         "Warning: this plugin doesn't support the /api/2.x endpoints; automatically rewriting" +
           " dbcApiUrl to use the /api/1.2 endpoint")
-      endpoint.dropRight(3) + "1.2"
+      _endpoint.dropRight(3) + "1.2"
     } else {
-      endpoint
+      _endpoint
     }
   }
 
